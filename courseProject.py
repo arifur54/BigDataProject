@@ -12,8 +12,13 @@ def PrintConfusionMatrix(y_test, y_pred):
     print("Confusion Matrix:")
     print(conf_matrix)
 
+def PrintClassificationReport(y_test, y_pred):
+   classification_rep = classification_report(y_test, y_pred)
+   print("Classification Report:")
+   print(classification_rep)
+
 if __name__ == "__main__":
-  banknote_data = pd.read_csv("data_banknote.csv")
+  banknote_data = pd.read_csv("data_banknote.csv", header=None)
 
   X = banknote_data.iloc[:, :-1] # All columns except the last one
   y = banknote_data.iloc[:, -1] # Last column
@@ -30,7 +35,7 @@ if __name__ == "__main__":
 
   #--------------------------------------- Fisher Linear Discriminant---------------------------------------
   # training time
-  print("Fisher's Linear Discriminant")
+  print("\n\t\tFisher's Linear Discriminant\n")
   start_time = time.time()
   clf.fit(X_train_scaled, y_train)
   training_time = time.time() - start_time
@@ -43,10 +48,11 @@ if __name__ == "__main__":
   print(f"Testing Time: {testing_time} seconds")
 
   PrintConfusionMatrix(y_test, y_pred)
+  PrintClassificationReport(y_test, y_pred)
 
   #--------------------------------------- Linear support vector machine------------------------------------
   # training time
-  print("\n\nSupport Vector Machine")
+  print("\n\n\t\tSupport Vector Machine\n")
   start_time = time.time()
   svm_classifier.fit(X_train_scaled, y_train)
   training_time = time.time() - start_time
@@ -59,3 +65,4 @@ if __name__ == "__main__":
   print(f"Testing Time: {testing_time} seconds")
 
   PrintConfusionMatrix(y_test, y_pred)
+  PrintClassificationReport(y_test, y_pred)
